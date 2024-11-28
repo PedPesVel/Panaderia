@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Cliente</title>
+    <link rel="stylesheet" href="cliente.css">
+    <script src="app.js"></script>
+</head>
+<body>
+
+    <div class="contaggprod">
+        <h1>Agregar Cliente</h1>
+        <form action="/agregarCliente" method="post">
+            <input type="text" name="nombre_cliente" placeholder="Nombre del Cliente" required><br><br>
+            <input type="text" name="telefono" placeholder="Teléfono" required><br><br>
+            <input type="email" name="correo_electronico" placeholder="Correo Electrónico" required><br><br>
+            <input type="submit" value="Agregar Cliente" class="btn">
+        </form>
+        <br><br>
+        <a href="cliente.html"><button class="btn">Regresar</button></a>
+    </div>
+
+</body>
+</html>

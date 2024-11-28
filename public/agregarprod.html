@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Producto</title>
+    <link rel="stylesheet" href="aggprod.css">
+    <script src="app.js"></script>
+</head>
+<body>
+
+    <div class="contaggprod">
+        <h1>Agregar Producto</h1>
+        <form action="/agregarProducto" method="post" enctype="multipart/form-data">
+            <input type="text" name="nombre_producto" placeholder="Nombre del Producto" required><br>
+            <input type="number" step="0.01" name="precio" placeholder="Precio" required><br>
+            <input type="file" name="imagen" accept="image/*" required><br><br>
+            <input type="number" name="existencias" placeholder="Existencias" min="0" required><br><br>
+            <input type="submit" value="Agregar Producto" class="btn">
+        </form>
+        <br><br>
+        <a href="inventario.html"><button class="btn">Regresar</button></a>
+    </div>
+
+</body>
+</html>

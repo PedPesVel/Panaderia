@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Desesperanza - Pedido</title>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="pedidos.css"> <!-- Asegúrate de enlazar correctamente tu hoja de estilos -->
+</head>
+<body>
+    
+    <header>
+        <div class="navegador">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="pedido.html">Pedidos</a></li>
+                <!-- Agrega más enlaces según sea necesario -->
+            </ul>
+        </div>
+    </header>
+
+    <div class="contenedor">
+        <h1>Pedidos del Cliente</h1>
+        
+        <div id="tabla-pedidos">
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    fetch('/obtenerPedido')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('tabla-pedidos').innerHTML = data;
+                    })
+                    .catch(error => {
+                        console.error('Error al obtener la tabla de pedidos:', error);
+                    });
+                });
+            </script>
+        </div>
+
+        <div class="opciones">
+            <a href="cliente.html"><button class="btn">Regresar a Clientes</button></a>
+        </div>
+    </div>
+
+</body>
+</html>

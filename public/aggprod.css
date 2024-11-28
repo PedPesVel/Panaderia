@@ -1,0 +1,72 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #efb084;
+    color: #fcf2eb;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.contaggprod {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    background-color: #eca878;
+    width: 50%;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.contaggprod h1 {
+    margin-bottom: 20px;
+}
+
+.contaggprod input[type="text"],
+.contaggprod input[type="number"],
+.contaggprod input[type="url"],
+.contaggprod input[type="file"] {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    background-color: #fcf2eb;
+    color: #333;
+}
+
+.contaggprod input[type="text"]:focus,
+.contaggprod input[type="number"]:focus,
+.contaggprod input[type="url"]:focus,
+.contaggprod input[type="file"]:focus {
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(252, 242, 235, 0.7);
+}
+
+.btn {
+    background-color: #fcf2eb;
+    color: #333;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+    margin-top: 15px;
+}
+
+.btn:hover {
+    background-color: #333;
+    color: #fcf2eb;
+}
+
+.btn a {
+    text-decoration: none;
+    color: inherit;
+}

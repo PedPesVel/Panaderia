@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Cliente</title>
+    <link rel="stylesheet" href="cliente.css">
+    <script src="app.js"></script>
+</head>
+<body>
+
+    <div class="contaggprod">
+        <h1>Actualizar Cliente</h1>
+        <form action="/actualizarCliente" method="post">
+            <input type="number" name="id_cliente" placeholder="ID del cliente" required>
+            <input type="text" name="nombre_cliente" placeholder="Nombre del Cliente"><br><br>
+            <input type="text" name="telefono" placeholder="Teléfono"><br><br>
+            <input type="email" name="correo_electronico" placeholder="Correo Electrónico"><br><br>
+            <input type="submit" value="Actualizar Cliente" class="btn">
+        </form>
+        <br><br>
+        <a href="cliente.html"><button class="btn">Regresar</button></a>
+    </div>
+
+</body>
+</html>

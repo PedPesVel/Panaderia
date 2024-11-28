@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Desesperanza</title>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="pedidos.css">
+</head>
+<body>
+    
+    <div class="contenedor">
+        <h1>Detalles del Pedido</h1>
+        
+        <div id="tabla-detalle-pedidos">
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    fetch('/obtenerDetallePedido')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('tabla-detalle-pedidos').innerHTML = data;
+                    })
+                    .catch(error => {
+                        console.error('Error al obtener la tabla de detalles del pedido:', error);
+                    });
+                });
+            </script>
+        </div>
+
+        <div class="opciones">
+            <a href="pedidos.html"><button class="btn">Regresar a Pedidos</button></a>
+        </div>
+    </div>    
+
+</body>
+</html>

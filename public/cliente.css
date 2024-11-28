@@ -1,0 +1,135 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #efb084;
+    color: #fcf2eb;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+header{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #e5a06f;
+    justify-content: center;
+    align-items: center;
+    padding: 10px
+}
+
+
+.navegador{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navegador ul{
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.navegador li{
+    position: relative;
+}
+
+.navegador a{
+    white-space: nowrap;
+    padding: 2px 70px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    color: inherit;
+    font-size: 20px;
+}
+
+.navegador a:hover{
+    color: black;
+    text-decoration: aliceblue;
+    transition: color 0.5s ease, background-color 0.5s; 
+}
+
+.contenedor a{
+    text-decoration: none;
+    color: inherit;
+    font-size: 20px;
+
+}
+
+.contenedor{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.contenedor a:hover{
+    color: black;
+}
+
+.contaggprod {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    background-color: #eca878;
+    width: 50%;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.contaggprod h1 {
+    margin-bottom: 20px;
+}
+
+.contaggprod input[type="text"],
+.contaggprod input[type="number"],
+.contaggprod input[type="email"]{
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    background-color: #fcf2eb;
+    color: #333;
+}
+
+.contaggprod input[type="text"]:focus,
+.contaggprod input[type="number"]:focus,
+.contaggprod input[type="url"]:focus,
+.contaggprod input[type="file"]:focus {
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(252, 242, 235, 0.7);
+}
+
+.btn {
+    background-color: #fcf2eb;
+    color: #333;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+    margin-top: 15px;
+}
+
+.btn:hover {
+    background-color: #333;
+    color: #fcf2eb;
+}
+
+.btn a {
+    text-decoration: none;
+    color: inherit;
+}
