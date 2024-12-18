@@ -1,0 +1,141 @@
+/* Estilo global del body */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh; /* Permite desplazamiento vertical */
+    margin: 0;
+    background-color: white; /* Color de fondo */
+    color: black; /* Color de texto */
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Estilo del header */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #D32F2F; /* Color de fondo del encabezado */
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+/* Estilos para la barra de navegación */
+.navegador {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.navegador ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.navegador li {
+    position: relative;
+}
+
+.navegador a {
+    white-space: nowrap;
+    padding: 2px 70px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    color: inherit;
+    font-size: 20px;
+}
+
+.navegador a:hover {
+    color: black;
+    text-decoration: underline; /* Cambio en hover */
+    transition: color 0.5s ease, background-color 0.5s; 
+}
+
+/* Contenedor de productos */
+.contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 80px;
+}
+
+/* Estilos de enlaces dentro del contenedor */
+.contenedor a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+    color: inherit;
+    font-size: 20px;
+}
+
+.contenedor a:hover {
+    color: black;
+}
+
+/* Estilos de la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #D32F2F; /* Color de fondo de los encabezados */
+    color: #fcf2eb; /* Color de texto de los encabezados */
+    font-weight: bold;
+}
+
+td {
+    background-color: #fff;
+    border-left: black;
+}
+
+td img {
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Efecto hover en filas */
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+table tr:first-child {
+    border-top: 2px solid black;
+}
+
+table tr:last-child {
+    border-bottom: 2px solid black;
+}
+
+/* Diseño móvil */
+@media (max-width: 768px) {
+    table, th, td {
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    td img {
+        width: 150px;
+        height: 150px;
+    }
+}

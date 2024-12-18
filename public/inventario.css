@@ -1,67 +1,93 @@
+/* Paleta de colores combinada */
+:root {
+    --rojo-navidad: #D32F2F;
+    --blanco-navidad: #FFFFFF;
+    --verde-navidad: #388E3C;
+    --crema-navidad: #efb084;
+    --dorado-navidad: #FFC107;
+    --naranja-sutil: #eca878;
+    --marron-suave: #e5a06f;
+}
+
+/* General */
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    min-height: 100vh; /* Permite desplazamiento vertical */
+    min-height: 100vh;
     margin: 0;
-    background-color: #efb084;
-    color: #fcf2eb;
+    background-color: var(--crema-navidad);
+    color: black;
     font-family: 'Courier New', Courier, monospace;
 }
 
+h1, h2, h3 {
+    font-family: 'Pacifico', cursive;
+    color: var(--rojo-navidad);
+    text-shadow: 2px 2px var(--dorado-navidad);
+}
+
+/* Encabezado */
 header {
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
-    background-color: #e5a06f;
+    background-color: var(--marron-suave);
+    color: var(--blanco-navidad);
+    padding: 10px;
+    display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
 }
 
-table{
-    background-color: #eca878;
-    color: #fcf2eb;
-    border-color: #333;
+header:after {
+    content: '';
+    display: block;
+    height: 5px;
+    background: linear-gradient(to right, var(--verde-navidad), var(--dorado-navidad), var(--verde-navidad));
 }
 
-.navegador{
+/* Navegador */
+.navegador {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px;
+    background-color: var(--rojo-navidad);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.navegador ul{
-    display: flex;
-    align-items: center;
+.navegador ul {
     list-style: none;
-}
-
-.navegador li{
-    position: relative;
-}
-
-.navegador a{
-    white-space: nowrap;
-    padding: 2px 70px;
+    margin: 0;
+    padding: 0;
     display: flex;
-    align-items: center;
+    gap: 20px;
+}
+
+.navegador li {
+    display: inline;
+}
+
+.navegador a {
     text-decoration: none;
-    transition: color 0.3s ease;
-    color: inherit;
-    font-size: 20px;
+    color: var(--blanco-navidad);
+    font-size: 18px;
+    padding: 5px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.navegador a:hover{
-    color: black;
-    text-decoration: aliceblue;
-    transition: color 0.5s ease, background-color 0.5s; 
+.navegador a:hover {
+    background-color: var(--blanco-navidad);
+    color: var(--rojo-navidad);
 }
 
+/* Contenedor */
 .contenedor {
-    padding-top: 100px; /* Aumenta el espacio para evitar el solapamiento con el header */
+    padding-top: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -69,21 +95,20 @@ table{
     text-align: center;
 }
 
-
-.contenedor a{
+.contenedor a {
     text-decoration: none;
     transition: color 0.3s ease;
     color: inherit;
     font-size: 20px;
 }
 
-.contenedor a:hover{
+.contenedor a:hover {
     color: black;
-
 }
 
+/* Botones */
 .btn {
-    background-color: #fcf2eb;
+    background-color: var(--blanco-navidad);
     color: #333;
     padding: 10px 20px;
     border: none;
@@ -96,11 +121,60 @@ table{
 
 .btn:hover {
     background-color: #333;
+    color: var(--blanco-navidad);
+}
+
+/* Estilos de la tabla */
+table {
+    border-collapse: collapse;
+    margin-top: 30px;
+    border: 1px solid #ddd;
+    background-color: var(--naranja-sutil);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: var(--rojo-navidad);
     color: #fcf2eb;
+    font-weight: bold;
 }
 
-.btn a {
+td {
+    background-color: #fff;
+    color: black;
+}
+
+td img {
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Efecto hover en filas */
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Footer */
+footer {
+    background-color: var(--verde-navidad);
+    color: var(--blanco-navidad);
+    text-align: center;
+    padding: 15px;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+footer a {
+    color: var(--dorado-navidad);
     text-decoration: none;
-    color: inherit;
 }
 
+footer a:hover {
+    text-decoration: underline;
+}

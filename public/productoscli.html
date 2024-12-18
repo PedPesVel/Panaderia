@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Desesperanza</title>
+    <script src="../app.js"></script>
+    <link rel="stylesheet" href="stylepro.css">
+</head>
+<body>
+    <header id="navbarcli"></header>
+
+    <div class="contenedor">
+        <h1>Productos</h1>
+        <div id="tabla-contenedor">
+            <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                fetch('/obtenerProducto')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('tabla-contenedor').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error al obtener la tabla:', error);
+                });
+            });
+            </script>
+        </div>
+    </div>
+    <script>
+        // Función para agregar un producto al carrito
+        document.addEventListener("DOMContentLoaded", function() {
+                    fetch("navbarcli.html")
+                        .then(response => response.text())
+                        .then(data => {
+                            document.getElementById("navbarcli").innerHTML = data;
+                        })
+                        .catch(error => console.error("Error al cargar el navegador:", error));
+                });
+
+        // app.js (frontend en el navegador)
+        function logout() {
+            fetch('/logout', {
+                method: 'POST',
+                credentials: 'same-origin',  // Asegúrate de que las cookies de sesión se envíen con la solicitud
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = 'index.html';  // Redirige a la página de inicio después del logout
+                } else {
+                    alert('Error al cerrar sesión');
+                }
+            })
+            .catch(error => {
+                console.error('Error en la solicitud:', error);
+            });
+        }
+
+        // Función para agregar un producto al carrito
+        function agregarAlCarrito(idProducto) {
+            const cantidad = 1; // Puedes obtener la cantidad desde un campo de entrada si lo deseas
+
+            fetch('/agregarAlCarrito', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id_producto: idProducto, cantidad: cantidad })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Producto agregado al carrito');
+                mostrarCarrito(); // Recargar el carrito para mostrar los cambios
+            })
+            .catch(error => {
+                console.error('Error al agregar al carrito:', error);
+                alert('Hubo un error al agregar el producto al carrito');
+            });
+            
+        }
+
+                // Función para mostrar los productos del carrito
+                function mostrarCarrito() {
+        fetch('/obtenerCarrito')
+        .then(response => response.json())
+        .then(carrito => {
+        const carritoHTML = document.getElementById('carrito');
+        const totalCarrito = document.getElementById('totalCarrito');
+        let total = 0;
+
+        carritoHTML.innerHTML = '';  // Limpiar la tabla antes de mostrar los productos
+
+        carrito.forEach(producto => {
+            total += producto.precio * producto.cantidad;
+
+            carritoHTML.innerHTML += `
+                <tr>
+                    <td><img src="${producto.imagen_url}" alt="${producto.nombre_producto}" width="50" height="50"></td>
+                    <td>${producto.nombre_producto}</td>
+                    <td>$${producto.precio}</td>
+                    <td>
+                        <input type="number" value="${producto.cantidad}" min="1" onchange="actualizarCantidad(${producto.id_producto}, this.value)">
+                    </td>
+                    <td>$${producto.precio * producto.cantidad}</td>
+                    <td><button onclick="eliminarProducto(${producto.id_producto})">Eliminar</button></td>
+                </tr>
+            `;
+        });
+
+        totalCarrito.textContent = total.toFixed(2);
+        })
+        .catch(error => {
+        console.error('Error al cargar el carrito:', error);
+        });
+        }
+
+        // Función para actualizar la cantidad de un producto en el carrito
+        function actualizarCantidad(idProducto, nuevaCantidad) {
+        fetch(`/actualizarCantidad/${idProducto}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ cantidad: nuevaCantidad })
+        })
+        .then(response => response.json())
+        .then(data => {
+        mostrarCarrito();  // Recargar el carrito
+        })
+        .catch(error => console.error('Error al actualizar la cantidad:', error));
+        }
+
+        // Función para eliminar un producto del carrito
+        function eliminarProducto(idProducto) {
+    fetch(`/eliminarProducto/${idProducto}`, {
+        method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => {
+        mostrarCarrito();  // Recargar el carrito después de eliminar
+    })
+    .catch(error => console.error('Error al eliminar el producto:', error));
+}
+
+    </script>
+</body>
+</html>

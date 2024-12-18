@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="navegador">
+        <ul>
+            <li><a href="indexad.html">Inicio</a></li>
+            <li><a href="#" id="logout">Cerrar Sesión</a></li>
+            <li><a href="inventario.html">Inventario</a></li>
+           
+        </ul>
+    </div>
+    <script>
+        // Lógica para cerrar sesión al hacer clic
+        document.getElementById('logout').addEventListener('click', function(e) {
+            e.preventDefault(); // Evitar la recarga de la página
+
+            // Realizar una solicitud POST para cerrar la sesión
+            fetch('/logout', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Redirigir al usuario a la página de inicio de sesión o la página principal
+                        window.location.href = 'login.html';
+                    } else {
+                        alert('Error al cerrar sesión');
+                    }
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="../app.js"></script>
+</head>
+<body>
+<header id="navbar"></header>
+    <div class="contenedor">
+        <h1>Registrarse</h1>
+        <form action="/registro" method="post">
+            <table>
+                    <tr>
+                        <td><label for="name"> Username </label></td>
+                        <td> <input type="text" id="name" name="name" placeholder="Nombre completo" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="email">Correo electrónico</label></td>
+                        <td> <input type="email" id="email" name="email" placeholder="Correo electrónico" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="password">Contraseña</label></td>
+                        <td><input type="password" id="password" name="password" placeholder="Contraseña" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="password">Confirmar contraseña</label></td>
+                        <td><input type="password" id="confirm" name="confirm" placeholder="Contraseña" required></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button type="submit">Registrarse</button></td>
+                    </tr>
+            </table>
+        </form>
+        <div>
+            <a href="logueo.html">¿Ya tienes una cuenta? Inicia Sesion</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("navbar.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("navbar").innerHTML = data;
+                })
+                .catch(error => console.error("Error al cargar el navegador:", error));
+        });
+    </script>
+</body>
+</html>

@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  <header id="navbar"></header>
+  <header id="navbarad"></header>
 
     <div class="contenedor">
         <label> <font size="5">Panadería</font></label>
@@ -18,10 +18,10 @@
     </div>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            fetch("navbar.html")
+            fetch("navbarad.html")
                 .then(response => response.text())
                 .then(data => {
-                    document.getElementById("navbar").innerHTML = data;
+                    document.getElementById("navbarad").innerHTML = data;
                 })
                 .catch(error => console.error("Error al cargar el navegador:", error));
         });

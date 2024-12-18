@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Desesperanza</title>
+    <script src="../app.js"></script>
+    <link rel="stylesheet" href="stylepro.css">
+</head>
+<body>
+    <header id="navbar"></header>
+
+    <div class="contenedor">
+        <h1>Productos</h1>
+        <div id="tabla-contenedor">
+            <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                fetch('/obtenerProducto')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('tabla-contenedor').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error al obtener la tabla:', error);
+                });
+            });
+            </script>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("navbar.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("navbar").innerHTML = data;
+                })
+                .catch(error => console.error("Error al cargar el navegador:", error));
+        });
+    </script>
+</body>
+</html>

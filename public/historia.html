@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia de la Panadería</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header id="navbar"></header>
+
+    <div class="contenido">
+        <center>
+        <section class="historia"><br><br>
+            <h1>Historia de la Panadería</h1>
+            <p>La panadería "La Desesperanza" fue fundada en 2024 por el Sr. Pescador, quien con su pasión por la panadería tradicional, creó una empresa que ha perdurado por generaciones. Desde sus humildes comienzos en un pequeño local en el centro de la ciudad, hasta convertirse en una de las panaderías más queridas por los habitantes locales, su misión siempre ha sido ofrecer productos frescos, de alta calidad y hechos con los mejores ingredientes.</p>
+            <p>Hoy en día, seguimos manteniendo ese espíritu artesanal, combinando las técnicas tradicionales con innovaciones que nos permiten ofrecer una variedad de panes y postres para todos los gustos.</p>
+        </section>
+
+        <section class="imagenes">
+            <h2>Galería de Nuestra Historia</h2>
+            <table>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Descripción</th>
+                </tr>
+                <tr>
+                    <td><img src="img/recien.jpg" alt="Pan recién horneado" class="imagen"></td>
+                    <td>Uno de nuestros panes más populares, horneado al estilo tradicional.</td>
+                </tr>
+                <tr>
+                    <td><img src="img/pandulce.jpg" alt="Tienda original" class="imagen"></td>
+                    <td>Nuestro tradicional pan dulce hecho para todos los gustos</td>
+                </tr>
+                <tr>
+                    <td><img src="img/pnh.jpg" alt="Productos recién horneados" class="imagen"></td>
+                    <td>Los productos recién horneados listos para ser entregados a nuestros clientes.</td>
+                </tr>
+            </table>
+        </section>
+    </div>
+</center>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch("navbar.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("navbar").innerHTML = data;
+            })
+            .catch(error => console.error("Error al cargar el navegador:", error));
+    });
+</script>
+    <footer>
+        <p>&copy; 2024 La Desesperanza. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

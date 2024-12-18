@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Desesperanza</title>
+    <script src="../app.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header id="navbarcli"></header>
+
+    <div class="contenedor">
+        <label> <font size="5">Panadería</font></label>
+        <h1>"La Desesperanza"</h1>
+
+        <img src="img/logoo.jpg" width="85%">
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("navbarcli.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("navbarcli").innerHTML = data;
+                })
+                .catch(error => console.error("Error al cargar el navegador:", error));
+        });
+
+         // app.js (frontend en el navegador)
+function logout() {
+    fetch('/logout', {
+        method: 'POST',
+        credentials: 'same-origin',  // Asegúrate de que las cookies de sesión se envíen con la solicitud
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = 'index.html';  // Redirige a la página de inicio después del logout
+        } else {
+            alert('Error al cerrar sesión');
+        }
+    })
+    .catch(error => {
+        console.error('Error en la solicitud:', error);
+    });
+}
+
+
+    </script>
+</body>
+</html>

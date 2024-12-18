@@ -9,17 +9,7 @@
 </head>
 <body>
 
-    <header>
-        <nav class="navegador">
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="inventario.html">Inventario</a></li>
-                <li><a href="cliente.html">Clientes</a></li>
-                <li><a href="pedido.html">Pedidos</a></li>
-                <li><a href="proveedor.html">Proveedores</a></li>
-            </ul>
-        </nav>
-    </header>
+   <header id="navbarad"></header>
 
     <div class="contenedor">
         <h1>Inventario</h1>
@@ -46,7 +36,16 @@
             </script>
         </div>
     </div>
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("navbarad.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("navbarad").innerHTML = data;
+                })
+                .catch(error => console.error("Error al cargar el navegador:", error));
+        });
+    </script>
    
 </body>
 </html>

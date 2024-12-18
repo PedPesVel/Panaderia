@@ -1,0 +1,176 @@
+/* General */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh; /* Permite desplazamiento vertical */
+    margin: 0;
+    background-color: #efb084;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #e5a06f;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.navegador {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.navegador ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.navegador li {
+    align-items: center;
+}
+
+.navegador a {
+    white-space: nowrap;
+    padding: 10px 30px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    color: inherit;
+    font-size: 20px;
+}
+
+.navegador a:hover {
+    color: black;
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.7);
+    transition: color 0.5s ease, background-color 0.5s;
+}
+
+/* Contenedor principal */
+.contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 80px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 900px;
+}
+
+.contenedor h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.contenedor form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contenedor label {
+    font-size: 18px;
+}
+
+.contenedor input {
+    padding: 10px;
+    font-size: 16px;
+    width: 300px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.contenedor button {
+    padding: 10px;
+    font-size: 18px;
+    background-color: #e5a06f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contenedor button:hover {
+    background-color: #d48d59;
+}
+
+.contenedor a {
+    text-decoration: none;
+    color: inherit;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+.contenedor a:hover {
+    color: black;
+}
+
+/* Sección Historia */
+.historia {
+    text-align: center;
+    margin-top: 100px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 900px;
+}
+
+.historia p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.historia h1 {
+    font-size: 26px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.imagenes table {
+    width: 100%;
+    margin-top: 30px;
+    border-collapse: collapse;
+}
+
+.imagenes th, .imagenes td {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.imagenes th {
+    background-color: #e5a06f;
+    color: white;
+}
+
+.imagenes td {
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.imagenes .imagen {
+    width: 150px;
+    height: auto;
+    max-width: 200px;
+}

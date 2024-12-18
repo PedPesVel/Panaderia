@@ -1,60 +1,185 @@
+/* Paleta de colores */
+:root {
+    --rojo-navidad: #D32F2F;
+    --blanco-navidad: #FFFFFF;
+    --verde-navidad: #388E3C;
+    --crema-navidad: white ;
+    --dorado-navidad: #FFC107;
+}
+
+/* Estilos de la tabla */
+table {
+
+    border-collapse: collapse;
+    margin-top: 30px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #D32F2F; /* Color de fondo de los encabezados */
+    color: #fcf2eb; /* Color de texto de los encabezados */
+    font-weight: bold;
+}
+
+td {
+    background-color: #fff;
+    border-left: black;
+}
+
+td img {
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Efecto hover en filas */
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+table tr:first-child {
+    border-top: 2px solid black;
+}
+
+table tr:last-child {
+    border-bottom: 2px solid black;
+}
+
+/* General */
 body {
+    background-color: var(--crema-navidad);
+    color: var(--verde-navidad);
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     min-height: 100vh; /* Permite desplazamiento vertical */
-    margin: 0;
-    background-color: #efb084;
-    color: #fcf2eb;
-    font-family: 'Courier New', Courier, monospace;
 }
 
+h1, h2, h3 {
+    font-family: 'Pacifico', cursive;
+    color: var(--rojo-navidad);
+    text-shadow: 2px 2px var(--dorado-navidad);
+}
+
+/* Encabezado */
 header {
+    background-color: var(--rojo-navidad);
+    color: var(--blanco-navidad);
+    padding: 20px;
+    text-align: center;
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
-    background-color: #e5a06f;
+    display: flex;
     justify-content: center;
     align-items: center;
+}
+
+header:after {
+    content: '';
+    display: block;
+    height: 5px;
+    background: linear-gradient(to right, var(--verde-navidad), var(--dorado-navidad), var(--verde-navidad));
+}
+
+.navegador {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: var(--rojo-navidad);
     padding: 10px;
-}
-
-
-.navegador{
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
-.navegador ul{
-    display: flex;
-    align-items: center;
+.navegador ul {
     list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px; /* Espaciado entre opciones */
 }
 
-.navegador li{
+.navegador li {
+    display: inline;
+}
+
+.navegador a {
+    text-decoration: none;
+    color: var(--blanco-navidad);
+    font-size: 18px;
+    padding: 5px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: transparent;
+}
+
+.navegador a:hover {
+    background-color: var(--blanco-navidad);
+    color: var(--rojo-navidad);
+}
+
+.navegador a.active {
+    background-color: var(--dorado-navidad);
+    color: var(--verde-navidad);
+}
+
+/* Mostrador de productos */
+.product-display {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    gap: 20px;
+}
+
+.product-card {
+    background-color: var(--blanco-navidad);
+    border: 2px solid var(--verde-navidad);
+    border-radius: 10px;
+    width: 200px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 10px;
     position: relative;
 }
 
-.navegador a{
-    white-space: nowrap;
-    padding: 2px 70px;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    color: inherit;
-    font-size: 20px;
+.product-card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+    border-color: var(--dorado-navidad);
 }
 
-.navegador a:hover{
-    color: black;
-    text-decoration: aliceblue;
-    transition: color 0.5s ease, background-color 0.5s; 
+.product-card img {
+    max-width: 100%;
+    border-radius: 10px;
 }
 
+.product-card h3 {
+    margin: 10px 0;
+    color: var(--rojo-navidad);
+}
+
+.product-card .price {
+    font-size: 1.2rem;
+    color: var(--verde-navidad);
+}
+
+/* Contenedor */
 .contenedor {
     display: flex;
     justify-content: center;
@@ -64,15 +189,64 @@ header {
     margin-top: 80px;
 }
 
-
-.contenedor a{
+.contenedor a {
     text-decoration: none;
     transition: color 0.3s ease;
     color: inherit;
     font-size: 20px;
 }
 
-.contenedor a:hover{
+.contenedor a:hover {
     color: black;
+}
 
+/* Decoraciones Navideñas */
+.decoraciones {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.decoraciones .guirnalda {
+    width: 100%;
+    height: auto;
+}
+
+/* Botones */
+button {
+    background-color: var(--rojo-navidad);
+    color: var(--blanco-navidad);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: var(--dorado-navidad);
+    color: var(--verde-navidad);
+    transition: background-color 0.3s ease;
+}
+
+/* Footer */
+footer {
+    background-color: var(--verde-navidad);
+    color: var(--blanco-navidad);
+    text-align: center;
+    padding: 15px;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+footer a {
+    color: var(--dorado-navidad);
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
 }

@@ -1,22 +1,27 @@
 const express = require('express');
+const session = require('express-session');
 const mysql = require('mysql2');
 const multer = require('multer');
 const path = require('path');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 
 app.use((req, res, next) => {
     console.log('Solicitud:', req.method, req.path);
     next();
 });
 
-
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '29050923NP+m',
+    password: 'Sigmma0312+',
     database: 'panaderia'
 });
 
@@ -28,18 +33,139 @@ db.connect((err) => {
     }
 });
 
+// Configuración de sesiones
+app.use(session({
+    secret: 'mi_clave_secreta',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+}));
+
+// JWT Secret Key
+const SECRET_KEY = 'mi_clave_secreta';
+
+// Middleware de autenticación
+function authMiddleware(req, res, next) {
+    const token = req.cookies.authToken;
+    if (!token) {
+        return res.status(403).json({ error: "No autorizado" });
+    }
+    try {
+        const decoded = jwt.verify(token, SECRET_KEY);
+        req.user = decoded;
+        next();
+    } catch (error) {
+        return res.status(401).json({ error: "Token inválido o expirado" });
+    }
+}
 // Configurar almacenamiento de multer
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/');
+        cb(null, 'uploads/'); // Carpeta donde se guardarán los archivos
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname)); // Renombra el archivo para evitar conflictos
+        cb(null, Date.now() + path.extname(file.originalname)); // Evita conflictos con nombres únicos
     }
 });
 
-const upload = multer({ storage: storage });
-app.use('/uploads', express.static('uploads'));
+const upload = multer({ storage: storage }); // Inicializa multer con la configuración
+
+
+// Rutas de usuario
+app.post('/registro', (req, res) => {
+    const { name, email, password, confirm } = req.body;
+
+    if (!name || !email || !password || !confirm) {
+        return res.status(400).send("Todos los datos son requeridos");
+    }
+
+    if (password !== confirm) {
+        return res.status(400).send("Las contraseñas no coinciden");
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailRegex.test(email)) {
+        return res.status(400).send("El correo electrónico no tiene un formato válido");
+    }
+
+    bcrypt.hash(password, 10, (err, hashedPassword) => {
+        if (err) {
+            console.error("Error al encriptar la contraseña:", err);
+            return res.status(500).send("Error interno del servidor");
+        }
+
+        db.query(
+            'INSERT INTO usuario (nombre_usuario, correo_electronico, password) VALUES (?, ?, ?)',
+            [name, email, hashedPassword],
+            (err) => {
+                if (err) {
+                    console.error("Error al insertar el usuario:", err);
+                    return res.status(500).send("Error al registrar el usuario");
+                }
+                res.send(`Usuario registrado con éxito. <a href='/logueo.html'>Ir a Login</a>`);
+            }
+        );
+    });
+});
+
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.status(400).send("Todos los datos son requeridos");
+    }
+
+    db.query('SELECT * FROM usuario WHERE correo_electronico = ?', [email], (err, result) => {
+        if (err) {
+            console.error("Error al verificar el correo electrónico:", err);
+            return res.status(500).send("Error interno del servidor");
+        }
+
+        if (result.length === 0) {
+            return res.status(400).send("El correo electrónico no está registrado");
+        }
+
+        const usuario = result[0];
+
+        bcrypt.compare(password, usuario.password, (err, isMatch) => {
+            if (err || !isMatch) {
+                return res.status(400).send("Credenciales inválidas");
+            }
+
+            const token = jwt.sign(
+                { id_usuario: usuario.id_usuario, nombre_usuario: usuario.nombre_usuario, rol: usuario.rol },
+                SECRET_KEY,
+                { expiresIn: '1h' }
+            );
+
+            res.cookie('authToken', token, {
+                httpOnly: true,
+                secure: false,
+                maxAge: 3600000
+            });
+
+            res.redirect(usuario.rol === 'Administrador' ? '/admin' : '/indexcli.html');
+        });
+    });
+});
+
+app.post('/logout', (req, res) => {
+    res.clearCookie('authToken');  // Asegúrate de usar clearCookie correctamente
+
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).json({ success: false, message: 'No se pudo cerrar la sesión' });
+        }
+        // Redirige al usuario después de cerrar la sesión
+        res.redirect('/index.html');  // Redirige a la página deseada (puede ser indexcli.html u otra)
+    });
+});
+
+
+app.get('/verify', authMiddleware, (req, res) => {
+    res.status(200).json({ authenticated: true, user: req.user });
+});
+
 
 app.post('/agregarProducto', upload.single('imagen'), (req, res) => {
     const { nombre_producto, precio, existencias } = req.body;
@@ -164,8 +290,8 @@ app.post(`/eliminarProducto`, (req, res) =>{
 
 app.get('/obtenerProducto', (req, res) => {
     db.query('SELECT * FROM producto', (err, respuesta) => {
-        if(err) return console.log('ERROR', err);
-        
+        if (err) return console.log('ERROR', err);
+
         var prodHTML = ``;
         respuesta.forEach(prod => {
             prodHTML += `
@@ -175,12 +301,15 @@ app.get('/obtenerProducto', (req, res) => {
                     <td>${prod.nombre_producto}</td>
                     <td>${prod.precio}</td>
                     <td>${prod.existencias}</td>
+                    <td>
+                        <!-- Botón Comprar con ID del producto -->
+                        <button onclick="agregarAlCarrito(${prod.id_producto})">Comprar</button>
+                    </td>
                 </tr>
             `;
         });
 
-        return res.send(
-            `
+        return res.send(`
             <table>
                 <tr>
                     <th>ID del Producto</th>
@@ -188,11 +317,113 @@ app.get('/obtenerProducto', (req, res) => {
                     <th>Nombre del producto</th>
                     <th>Precio por unidad</th>
                     <th>Existencias</th>
+                    <th>Comprar</th>
                 </tr>
                 ${prodHTML}
             </table>
-            `
-        );
+        `);
+    });
+});
+
+// Ruta para agregar un producto al carrito
+app.post('/agregarAlCarrito', (req, res) => {
+    const { id_producto, cantidad } = req.body; // Datos enviados desde el frontend
+    const id_usuario = req.session.userId; // Asumimos que el usuario está logueado y su id está en la sesión
+
+    // Verificar si el producto ya está en el carrito
+    db.query(`
+        SELECT * FROM carrito WHERE id_usuario = ? AND id_producto = ?
+    `, [id_usuario, id_producto], (err, result) => {
+        if (err) {
+            console.error('Error al verificar el carrito:', err);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        if (result.length > 0) {
+            // Si el producto ya está en el carrito, actualizamos la cantidad
+            const nuevaCantidad = result[0].cantidad + cantidad;
+            db.query(`
+                UPDATE carrito SET cantidad = ? WHERE id_usuario = ? AND id_producto = ?
+            `, [nuevaCantidad, id_usuario, id_producto], (err, result) => {
+                if (err) {
+                    console.error('Error al actualizar la cantidad del carrito:', err);
+                    return res.status(500).send('Error en el servidor');
+                }
+
+                return res.status(200).send('Producto actualizado en el carrito');
+            });
+        } else {
+            // Si el producto no está en el carrito, lo agregamos
+            db.query(`
+                INSERT INTO carrito (id_usuario, id_producto, cantidad) VALUES (?, ?, ?)
+            `, [id_usuario, id_producto, cantidad], (err, result) => {
+                if (err) {
+                    console.error('Error al agregar el producto al carrito:', err);
+                    return res.status(500).send('Error en el servidor');
+                }
+
+                return res.status(200).send('Producto agregado al carrito');
+            });
+        }
+    });
+});
+
+// Ruta para obtener los productos del carrito del usuario
+app.get('/obtenerCarrito', (req, res) => {
+    const id_usuario = req.session.userId; // Asumimos que el usuario está logueado y su id está en la sesión
+
+    db.query(`
+        SELECT p.id_producto, p.nombre_producto, p.precio, p.imagen_url, c.cantidad
+        FROM carrito c
+        JOIN producto p ON c.id_producto = p.id_producto
+        WHERE c.id_usuario = ?
+    `, [id_usuario], (err, carrito) => {
+        if (err) {
+            console.error('Error al obtener el carrito:', err);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        res.json(carrito);
+    });
+});
+
+
+// Ruta para actualizar la cantidad de un producto en el carrito
+app.post('/actualizarCantidad/:id_producto', (req, res) => {
+    const { cantidad } = req.body;
+    const { id_producto } = req.params;
+    const id_usuario = req.session.userId; // Obtener el ID del usuario desde la sesión
+
+    db.query(`
+        UPDATE carrito 
+        SET cantidad = ? 
+        WHERE id_usuario = ? AND id_producto = ?
+    `, [cantidad, id_usuario, id_producto], (err, result) => {
+        if (err) {
+            console.error('Error al actualizar la cantidad:', err);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        res.status(200).send('Cantidad actualizada');
+    });
+});
+
+
+// Ruta para eliminar un producto del carrito
+app.delete('/eliminarProducto/:id_producto', (req, res) => {
+    const { id_producto } = req.params;
+    const id_usuario = req.session.userId; // Obtener el ID del usuario desde la sesión
+
+    db.query(`
+        DELETE FROM carrito 
+        WHERE id_usuario = ? AND id_producto = ?
+    `, [id_usuario, id_producto], (err, result) => {
+        if (err) {
+            console.error('Error al eliminar el producto:', err);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        res.status(200).send('Producto eliminado');
     });
 });
 
@@ -477,11 +708,18 @@ app.get('/obtenerDetallePedido', (req, res) => {
 
 
 
-
 app.use(express.static('public'));
 app.use(express.static('uploads'));
 
-// Iniciar el servidor
+app.get('/check-cookie', (req, res) => {
+    const authToken = req.cookies.authToken;
+    if (authToken) {
+        res.status(200).send(`Cookie encontrada: ${authToken}`);
+    } else {
+        res.status(404).send("No se encontró la cookie.");
+    }
+});
+
 app.listen(3000, () => {
     console.log("Servidor escuchando en http://localhost:3000");
 });
